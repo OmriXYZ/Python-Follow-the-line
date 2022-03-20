@@ -8,7 +8,7 @@ import pyshine as ps
 import HandTrackingModule as htm
 
 
-def randomMaze():
+def randomMaze(cap):
     w, h = int(cap.get(3)), int(cap.get(4))
 
     lines = []
@@ -173,7 +173,7 @@ def main():
             finger = d_finger.drawByID(img, finger_id)
             if ((doRandomMaze and int(time_sec) % 4 == 0)):
                 timer += 1
-                lines, startPoint, endPoint = randomMaze()
+                lines, startPoint, endPoint = randomMaze(cap)
                 onMaze = True
                 doRandomMaze = False
                 time_sec = 0
