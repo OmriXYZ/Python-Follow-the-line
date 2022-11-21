@@ -1,3 +1,3 @@
-Follow-the-line
-Image processing game developed with Python.
-using opencv lib\
+Follow-the-line\
+A maze game using computer vision.\
+Developed with Python and using opencv libs.
