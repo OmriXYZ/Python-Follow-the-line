@@ -3,8 +3,6 @@ import random
 import time
 
 import cv2
-import numpy as np
-import pyshine as ps
 import HandTrackingModule as htm
 
 
@@ -15,20 +13,20 @@ def randomMaze(cap):
 
     lastPosition = 3
 
-    endX = w-w//11
-    endY = int(h-h//1.2) + int(h)//8
+    endX = w - w // 11
+    endY = int(h - h // 1.2) + int(h) // 8
     x2 = 0
     y2 = 0
 
     sumOfWidth = 0
 
     while sumOfWidth < w - 75:
-        position = random.randint(1, 3) #1 up #2 down #3 left
+        position = random.randint(1, 3)  # 1 up #2 down #3 left
         const_w = random.randint(10, 70)
         const_h = random.randint(15, 55)
 
         if lastPosition == 3:
-            if abs(endY - h) > h-80:
+            if abs(endY - h) > h - 80:
                 position = 2
             elif abs(endY) < 80:
                 position = 1
@@ -55,18 +53,17 @@ def randomMaze(cap):
             x2 = preX2 - const_w
             y2 = preY2
             lines.append((preX2, preY2, x2, y2))
-            sumOfWidth += preX2-x2
+            sumOfWidth += preX2 - x2
 
         endX = x2
         endY = y2
 
         lastPosition = position
 
-
     startPoint = []
     startPoint.append(lines[0])
     endPoint = []
-    endPoint.append(lines[len(lines)-1])
+    endPoint.append(lines[len(lines) - 1])
     return lines, startPoint, endPoint
 
 def drawMaze(img, lines):
@@ -74,7 +71,7 @@ def drawMaze(img, lines):
         x1, y1, x2, y2 = vector[0], vector[1], vector[2], vector[3]
         if i == 0:
             cv2.line(img, (x1, y1), (x2, y2), (255, 0, 255), 7, cv2.LINE_AA)
-        elif i == len(lines)-1:
+        elif i == len(lines) - 1:
             cv2.line(img, (x1, y1), (x2, y2), (255, 0, 255), 7, cv2.LINE_AA)
         else:
             cv2.line(img, (x1, y1), (x2, y2), (0, 0, 0), 7, cv2.LINE_AA)
@@ -108,11 +105,10 @@ def collisonFinger(finger, lines):
             else:
                 high_y = y2
                 down_y = y1
-            if down_y -10 < y < high_y + 10 and x1 - 14 < x < x1 + 14:
+            if down_y - 10 < y < high_y + 10 and x1 - 14 < x < x1 + 14:
                 return True
 
     return False
-
 
 def chooseFinger(img, detector, timer, finger_id, prev_finger):
     if timer <= 2:
@@ -180,7 +176,8 @@ def main():
             if onMaze:
                 drawMaze(img, lines)
                 if collisonFinger(finger, startPoint) is not True and colorForStart == 0:
-                    text(img, "HOLD YOUR FINGER ON RIGHT PINK LINE UNTIL YOUR CIRCLE IS PINK - FOR START THE GAME", (10, 50),
+                    text(img, "HOLD YOUR FINGER ON RIGHT PINK LINE UNTIL YOUR CIRCLE IS PINK - FOR START THE GAME",
+                         (10, 50),
                          0.8)
                     doRandomMaze = True
                     timingForStart = 0
@@ -237,6 +234,7 @@ def main():
         end = time.time()
         time_sec += end - start
         timer += end - start
+
 
 if __name__ == "__main__":
     main()
